@@ -1,6 +1,6 @@
 # Ignorar o arquivo de banco de dados SQLite
 *.db
-data/
+
 # Ignorar o script de teste
 *.sh
 

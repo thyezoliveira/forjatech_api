@@ -1,12 +1,17 @@
 
+
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from data.database import db
 from models.orcamento import Orcamento
 import os
 
 app = Flask(__name__)
+CORS(app, origins=["https://forjatech-oficial.netlify.app/"])
+app.config['SECRET_KEY'] = os.urandom(24)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(os.path.abspath(os.path.dirname(__file__)), 'data/orcamento.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 
 db.init_app(app)
 
