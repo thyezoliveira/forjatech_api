@@ -7,7 +7,7 @@ from models.orcamento import Orcamento
 import os
 
 app = Flask(__name__)
-CORS(app, origins=["https://forjatech-oficial.netlify.app/"])
+CORS(app)
 app.config['SECRET_KEY'] = os.urandom(24)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(os.path.abspath(os.path.dirname(__file__)), 'data/orcamento.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
