@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orçamentos Recebidos</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f4f4; }
+        h1 { color: #333; }
+        .orcamento {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .orcamento p { margin: 5px 0; }
+        .orcamento strong { color: #555; }
+    </style>
+</head>
+<body>
+    <h1>Orçamentos Recebidos</h1>
+
+    {% if orcamentos %}
+        {% for orcamento in orcamentos %}
+            <div class="orcamento">
+                <p><strong>ID:</strong> {{ orcamento.id }}</p>
+                <p><strong>Nome da Empresa:</strong> {{ orcamento.nomeEmpresa }}</p>
+                <p><strong>Ramo da Empresa:</strong> {{ orcamento.ramoEmpresa }}</p>
+                <p><strong>E-mail de Contato:</strong> {{ orcamento.emailContato }}</p>
+                <p><strong>Telefone:</strong> {{ orcamento.telefone if orcamento.telefone else 'N/A' }}</p>
+                <p><strong>Assunto:</strong> {{ orcamento.assunto }}</p>
+                <p><strong>Descrição Detalhada:</strong> {{ orcamento.descricaoDetalhada }}</p>
+                <p><strong>Confirmado:</strong> {{ 'Sim' if orcamento.confirmado else 'Não' }}</p>
+                <p><strong>Prazo:</strong> {{ orcamento.prazo if orcamento.prazo else 'Não informado' }}</p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>Nenhum orçamento encontrado.</p>
+    {% endif %}
+</body>
+</html>

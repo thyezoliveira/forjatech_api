@@ -1,13 +1,13 @@
 
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 from data.database import db
 from models.orcamento import Orcamento
 import os
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, origins=["https://forjatech-oficial.netlify.app/"])
 app.config['SECRET_KEY'] = os.urandom(24)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(os.path.abspath(os.path.dirname(__file__)), 'data/orcamento.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -38,6 +38,11 @@ def handle_form():
     db.session.commit()
 
     return jsonify({"msg": "Orçamento recebido e salvo com sucesso!"}), 201
+
+@app.route('/orcamentos', methods=['GET'])
+def get_orcamentos():
+    orcamentos = Orcamento.query.all()
+    return render_template('index.html', orcamentos=orcamentos)
 
 if __name__ == '__main__':
     app.run(debug=True)
