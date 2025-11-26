@@ -1,0 +1,11 @@
+# Ignorar o arquivo de banco de dados SQLite
+*.db
+
+# Ignorar o script de teste
+*.sh
+
+# Ignorar a pasta do ambiente virtual
+venv/
+
+__pycache__/
+*.pyc

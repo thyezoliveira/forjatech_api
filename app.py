@@ -1,6 +1,6 @@
 
 from flask import Flask, request, jsonify
-from database import db
+from data.database import db
 from models.orcamento import Orcamento
 import os
 
@@ -24,6 +24,7 @@ def handle_form():
         nomeEmpresa=data.get('nomeEmpresa'),
         ramoEmpresa=data.get('ramoEmpresa'),
         emailContato=data.get('emailContato'),
+        telefone=data.get('telefone'),
         assunto=data.get('assunto'),
         descricaoDetalhada=data.get('descricaoDetalhada')
     )

@@ -9,6 +9,7 @@ curl -X POST -H "Content-Type: application/json" -d '{
     "nomeEmpresa": "Minha Empresa Teste",
     "ramoEmpresa": "Tecnologia",
     "emailContato": "contato@minhaempresa.com",
+    "telefone": "11999998888",
     "assunto": "Dúvida sobre projeto",
     "descricaoDetalhada": "Esta é uma descrição detalhada da dúvida para o projeto de teste.",
     "prazo": "30 dias"
