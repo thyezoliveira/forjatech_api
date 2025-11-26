@@ -4,6 +4,7 @@ from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 from data.database import db
 from models.orcamento import Orcamento
+from email_module import send_budget_email
 import os
 
 app = Flask(__name__)
@@ -36,6 +37,8 @@ def handle_form():
     
     db.session.add(new_orcamento)
     db.session.commit()
+
+    send_budget_email(new_orcamento)
 
     return jsonify({"msg": "Orçamento recebido e salvo com sucesso!"}), 201
 
