@@ -18,8 +18,12 @@ db.init_app(app)
 with app.app_context():
     db.create_all()
 
-@app.route('/', methods=['POST'])
-def handle_form():
+@app.route('/')
+def home():
+    return render_template('home.html')
+
+@app.route('/api/orcamento', methods=['POST'])
+def create_orcamento():
     if not request.is_json:
         return jsonify({"msg": "Missing JSON in request"}), 400
 

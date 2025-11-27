@@ -20,7 +20,7 @@ O modelo de dados para um orçamento é o seguinte:
 
 ## Endpoints da API
 
-### `POST /`
+### `POST /api/orcamento`
 
 -   **Descrição:** Recebe os dados de um formulário, cria um novo orçamento no banco de dados e dispara um e-mail de notificação.
 -   **Corpo da Requisição (JSON):**
@@ -66,5 +66,5 @@ O modelo de dados para um orçamento é o seguinte:
 
 -   **Funcionalidade:** Envio de e-mails transacionais.
 -   **Gatilho:**
-    1.  **Criação de Orçamento:** É acionado quando um novo orçamento é criado com sucesso através do endpoint `POST /`.
+    1.  **Criação de Orçamento:** É acionado quando um novo orçamento é criado com sucesso através do endpoint `POST /api/orcamento`.
 -   **Observação:** Este módulo não possui um endpoint público, sendo consumido internamente pela aplicação.
