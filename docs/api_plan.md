@@ -48,6 +48,20 @@ O modelo de dados para um orçamento é o seguinte:
 -   **Tipo de Resposta:** `text/html`
 -   **Observação:** Este endpoint não é uma API RESTful tradicional que retorna JSON, mas sim uma página web para visualização interna.
 
+### `POST /orcamento/confirmar/<id>`
+
+-   **Descrição:** Confirma um orçamento, atualizando seu status e definindo o prazo de entrega. Esta ação é disparada a partir da interface de `/orcamentos`.
+-   **Parâmetros de URL:**
+    -   `id` (Integer): O ID do orçamento a ser confirmado.
+-   **Corpo da Requisição (application/x-www-form-urlencoded):**
+    -   `prazo` (Date): A data de prazo selecionada no formulário (enviada no formato `YYYY-MM-DD`). O backend a converte para `dd/mm/YYYY` antes de salvar.
+-   **Ação do Backend:**
+    1.  Busca o orçamento pelo `id`.
+    2.  Define o campo `confirmado` como `True`.
+    3.  Formata e armazena a data no campo `prazo`.
+    4.  Persiste as alterações no banco de dados.
+-   **Resposta:** `302 Found` - Redireciona o cliente para a rota `/orcamentos`.
+
 ### Módulo de E-mail (`email_module.py`)
 
 -   **Funcionalidade:** Envio de e-mails transacionais.
