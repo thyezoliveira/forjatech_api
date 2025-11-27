@@ -6,7 +6,9 @@ from data.database import db
 load_dotenv()
 from models.orcamento import Orcamento
 from email_module import send_budget_email
+from push_notifications import save_subscription, send_notification_to_all
 import os
+import json
 from datetime import datetime
 
 app = Flask(__name__)
@@ -24,6 +26,16 @@ with app.app_context():
 @app.route('/')
 def home():
     return render_template('home.html')
+
+@app.route('/api/save-subscription', methods=['POST'])
+def save_push_subscription():
+    if not request.is_json:
+        return jsonify({"msg": "Missing JSON in request"}), 400
+    
+    subscription_data = request.get_json()
+    save_subscription(subscription_data)
+    
+    return jsonify({"msg": "Subscription saved."}), 201
 
 @app.route('/api/orcamento', methods=['POST'])
 def create_orcamento():
@@ -45,6 +57,14 @@ def create_orcamento():
     db.session.commit()
 
     send_budget_email(new_orcamento)
+    
+    # Envia notificação push para todos os inscritos
+    push_message = {
+        "title": "Novo Pedido de Orçamento!",
+        "body": f"Um novo orçamento de {data.get('nomeEmpresa')} foi solicitado."
+    }
+    
+    send_notification_to_all(json.dumps(push_message))
 
     return jsonify({"msg": "Orçamento recebido e salvo com sucesso!"}), 201
 
