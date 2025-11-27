@@ -1,6 +1,9 @@
 from flask import Flask, request, jsonify, render_template, redirect, url_for
 from flask_cors import CORS
+from dotenv import load_dotenv
 from data.database import db
+
+load_dotenv()
 from models.orcamento import Orcamento
 from email_module import send_budget_email
 import os
