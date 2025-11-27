@@ -6,8 +6,9 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Lista de emails para receber a notificação
-RECIPIENT_LIST = ["thyezoliveira.homeoffice@gmail.com"]
+# Lista de emails para receber a notificação (carregada do .env)
+recipient_list_str = os.getenv('RECIPIENT_LIST', '')
+RECIPIENT_LIST = [email.strip() for email in recipient_list_str.split(',') if email.strip()]
 
 # Configurações do servidor SMTP (usando variáveis de ambiente)
 SMTP_SERVER = os.getenv('SMTP_SERVER', 'smtp.gmail.com')
