@@ -32,8 +32,17 @@
                 <p><strong>Telefone:</strong> {{ orcamento.telefone if orcamento.telefone else 'N/A' }}</p>
                 <p><strong>Assunto:</strong> {{ orcamento.assunto }}</p>
                 <p><strong>Descrição Detalhada:</strong> {{ orcamento.descricaoDetalhada }}</p>
-                <p><strong>Confirmado:</strong> {{ 'Sim' if orcamento.confirmado else 'Não' }}</p>
-                <p><strong>Prazo:</strong> {{ orcamento.prazo if orcamento.prazo else 'Não informado' }}</p>
+
+                {% if not orcamento.confirmado %}
+                <form action="/orcamento/confirmar/{{ orcamento.id }}" method="POST" style="margin-top: 10px;">
+                    <label for="prazo-{{ orcamento.id }}">Prazo:</label>
+                    <input type="date" id="prazo-{{ orcamento.id }}" name="prazo" required>
+                    <button type="submit">Confirmar Orçamento</button>
+                </form>
+                {% else %}
+                <p><strong>Status:</strong> Confirmado</p>
+                <p><strong>Prazo:</strong> {{orcamento.prazo}}</p>
+                {% endif %}
             </div>
         {% endfor %}
     {% else %}

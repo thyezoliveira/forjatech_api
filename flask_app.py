@@ -1,11 +1,10 @@
-
-
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, redirect, url_for
 from flask_cors import CORS
 from data.database import db
 from models.orcamento import Orcamento
 from email_module import send_budget_email
 import os
+from datetime import datetime
 
 app = Flask(__name__)
 CORS(app)
@@ -46,6 +45,23 @@ def handle_form():
 def get_orcamentos():
     orcamentos = Orcamento.query.all()
     return render_template('index.html', orcamentos=orcamentos)
+
+@app.route('/orcamento/confirmar/<int:id>', methods=['POST'])
+def confirmar_orcamento(id):
+    orcamento = Orcamento.query.get_or_404(id)
+    prazo_str = request.form.get('prazo')
+    
+    if prazo_str:
+        # Converte a data de YYYY-MM-DD para um objeto datetime
+        date_obj = datetime.strptime(prazo_str, '%Y-%m-%d')
+        # Formata o objeto datetime para DD/MM/YYYY
+        formatted_prazo = date_obj.strftime('%d/%m/%Y')
+        
+        orcamento.prazo = formatted_prazo
+        orcamento.confirmado = True
+        db.session.commit()
+    
+    return redirect(url_for('get_orcamentos'))
 
 if __name__ == '__main__':
     app.run(debug=True)
