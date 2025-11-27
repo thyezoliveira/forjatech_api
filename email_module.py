@@ -6,6 +6,10 @@ from email.mime.text import MIMEText
 
 # Lista de emails para receber a notificação (carregada do .env)
 recipient_list_str = os.getenv('RECIPIENT_LIST', '')
+
+# URL base da aplicação para links no email
+APP_BASE_URL = os.getenv('APP_BASE_URL', 'http://localhost:5000')
+
 # Configurações do servidor SMTP (usando variáveis de ambiente)
 SMTP_SERVER = os.getenv('SMTP_SERVER', 'smtp.gmail.com')
 SMTP_PORT = int(os.getenv('SMTP_PORT', 587))
@@ -36,6 +40,7 @@ def send_budget_email(orcamento):
         <p><strong>Assunto:</strong> {orcamento.assunto}</p>
         <p><strong>Descrição:</strong></p>
         <p>{orcamento.descricaoDetalhada}</p>
+        <p>Acesse todos os orçamentos: <a href="{APP_BASE_URL}/orcamentos">{APP_BASE_URL}/orcamentos</a></p>
     </body>
     </html>
     """

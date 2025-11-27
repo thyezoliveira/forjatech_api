@@ -9,7 +9,6 @@ VAPID_CLAIMS = {
 }
 
 SUBSCRIPTIONS_FILE = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'data/subscriptions.json')
-
 def get_all_subscriptions():
     """
     Carrega todas as inscrições de um arquivo.
