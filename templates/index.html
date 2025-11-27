@@ -4,20 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Orçamentos Recebidos</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f4f4; }
-        h1 { color: #333; }
-        .orcamento {
-            background-color: #fff;
-            border: 1px solid #ddd;
-            padding: 15px;
-            margin-bottom: 10px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .orcamento p { margin: 5px 0; }
-        .orcamento strong { color: #555; }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <h1>Orçamentos Recebidos</h1>
@@ -32,16 +19,22 @@
                 <p><strong>Telefone:</strong> {{ orcamento.telefone if orcamento.telefone else 'N/A' }}</p>
                 <p><strong>Assunto:</strong> {{ orcamento.assunto }}</p>
                 <p><strong>Descrição Detalhada:</strong> {{ orcamento.descricaoDetalhada }}</p>
+                <p>
+                    <strong>Status:</strong>
+                    {% if orcamento.confirmado %}
+                        <span class="status-confirmed">Confirmado</span>
+                    {% else %}
+                        <span class="status-pending">Pendente</span>
+                    {% endif %}
+                </p>
+                <p><strong>Prazo:</strong> {{ orcamento.prazo if orcamento.prazo else 'Não informado' }}</p>
 
                 {% if not orcamento.confirmado %}
-                <form action="/orcamento/confirmar/{{ orcamento.id }}" method="POST" style="margin-top: 10px;">
-                    <label for="prazo-{{ orcamento.id }}">Prazo:</label>
+                <form action="/orcamento/confirmar/{{ orcamento.id }}" method="POST">
+                    <label for="prazo-{{ orcamento.id }}">Definir Prazo:</label>
                     <input type="date" id="prazo-{{ orcamento.id }}" name="prazo" required>
                     <button type="submit">Confirmar Orçamento</button>
                 </form>
-                {% else %}
-                <p><strong>Status:</strong> Confirmado</p>
-                <p><strong>Prazo:</strong> {{orcamento.prazo}}</p>
                 {% endif %}
             </div>
         {% endfor %}
